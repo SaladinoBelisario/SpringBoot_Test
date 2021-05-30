@@ -11,7 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
 import java.math.BigDecimal;
 import static com.example.springboot_test.Datos.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,13 +23,13 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class SpringBootTestApplicationTests {
 
-    @Mock
+    @MockBean
     CuentaRepository cuentaRepository;
-    @Mock
+    @MockBean
     BancoRepository bancoRepository;
 
-    @InjectMocks
-    CuentaServiceImpl service;
+    @Autowired
+    CuentaService service;
 
 //    Cuenta CUENTA_001;
 //    Cuenta CUENTA_002;

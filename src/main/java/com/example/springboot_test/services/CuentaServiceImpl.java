@@ -4,9 +4,11 @@ import com.example.springboot_test.models.Banco;
 import com.example.springboot_test.models.Cuenta;
 import com.example.springboot_test.repositories.BancoRepository;
 import com.example.springboot_test.repositories.CuentaRepository;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Service
 public class CuentaServiceImpl implements CuentaService{
     private CuentaRepository cuentaRepository;
     private BancoRepository bancoRepository;
