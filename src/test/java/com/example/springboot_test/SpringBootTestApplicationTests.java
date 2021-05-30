@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import static com.example.springboot_test.Datos.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -35,11 +34,8 @@ class SpringBootTestApplicationTests {
         service = new CuentaServiceImpl(cuentaRepository, bancoRepository);
 
         CUENTA_001 = crearCuenta001();
-        CUENTA_001.setSaldo(new BigDecimal("1000"));
         CUENTA_002 = crearCuenta002();
-        CUENTA_002.setSaldo(new BigDecimal("2000"));
         BANCO = crearBanco();
-        BANCO.setTotalTransferencia(0);
     }
 
     @Test
@@ -68,6 +64,9 @@ class SpringBootTestApplicationTests {
 
         verify(bancoRepository, times(2)).findById(1L);
         verify(bancoRepository).update(any(Banco.class));
+
+        verify(cuentaRepository, times(6)).findById(anyLong());
+        verify(cuentaRepository, never()).findAll();
     }
 
     @Test
@@ -99,6 +98,19 @@ class SpringBootTestApplicationTests {
 
         verify(bancoRepository, times(1)).findById(1L);
         verify(bancoRepository, never()).update(any(Banco.class));
+
+        verify(cuentaRepository, times(5)).findById(anyLong());
+        verify(cuentaRepository, never()).findAll();
     }
 
+    @Test
+    void contextLoads3() {
+        when(cuentaRepository.findById(1L)).thenReturn(crearCuenta001());
+        Cuenta cuenta1 = service.findById(1L);
+        Cuenta cuenta2 = service.findById(1L);
+        assertSame(cuenta1, cuenta2);
+        assertEquals("Ludwig", cuenta1.getPersona());
+        assertEquals("Ludwig", cuenta2.getPersona());
+        verify(cuentaRepository, times(2)).findById(1L);
+    }
 }
