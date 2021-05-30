@@ -36,11 +36,6 @@ public class CuentaServiceImpl implements CuentaService{
     @Override
     public void transferir(Long cuentaOrigenId, Long cuentaDestinoId, BigDecimal monto,
                            Long bancoId) {
-        Banco banco = bancoRepository.findById(bancoId);
-        int totalTransferencia = banco.getTotalTransferencia();
-        banco.setTotalTransferencia(++totalTransferencia);
-        bancoRepository.update(banco);
-
         Cuenta cuentaOrigen = cuentaRepository.findById(cuentaOrigenId);
         cuentaOrigen.debito(monto);
         cuentaRepository.update(cuentaOrigen);
@@ -48,5 +43,10 @@ public class CuentaServiceImpl implements CuentaService{
         Cuenta cuentaDestino = cuentaRepository.findById(cuentaDestinoId);
         cuentaDestino.credito(monto);
         cuentaRepository.update(cuentaDestino);
+
+        Banco banco = bancoRepository.findById(bancoId);
+        int totalTransferencia = banco.getTotalTransferencia();
+        banco.setTotalTransferencia(++totalTransferencia);
+        bancoRepository.update(banco);
     }
 }
