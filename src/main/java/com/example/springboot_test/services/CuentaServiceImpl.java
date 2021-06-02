@@ -39,6 +39,11 @@ public class CuentaServiceImpl implements CuentaService{
     }
 
     @Override
+    public void deleteById(Long id) {
+        cuentaRepository.deleteById(id);
+    }
+
+    @Override
     public int revisarTotalTransferencias(Long bancoId) {
         Banco banco = bancoRepository.findById(bancoId).orElseThrow();
         return banco.getTotalTransferencias();

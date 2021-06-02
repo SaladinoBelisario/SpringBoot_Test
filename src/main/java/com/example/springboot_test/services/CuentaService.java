@@ -12,9 +12,11 @@ public interface CuentaService {
 
     Cuenta save(Cuenta cuenta);
 
+    void deleteById(Long id);
+
     int revisarTotalTransferencias(Long bancoId);
 
     BigDecimal revisarSaldo(Long cuentaId);
 
-    void transferir(Long cuentaOrigenId, Long cuentaDestinoId, BigDecimal monto, Long bancoId);
+    void transferir(Long numCuentaOrigen, Long numCuentaDestino, BigDecimal monto, Long bancoId);
 }
